@@ -1,0 +1,2 @@
+class WrongTextFormatException(Exception):
+    pass
