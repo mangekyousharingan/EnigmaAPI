@@ -9,6 +9,5 @@ class Decode(Resource):
     @Parser.validate_attributes
     def put(self):
         text = Parser.attributes['text']
-        decoder = Decoder(text)
-
-        return jsonify({'decoded_text': decoder.decoded_text})
+        decoded_text = Decoder.decode_text(text)
+        return jsonify({'decoded_text': decoded_text})
