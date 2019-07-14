@@ -1,3 +1,4 @@
+sudo: required
 language: python
 services:
   - docker
@@ -9,3 +10,4 @@ script:
   - make test
   - make docker_build
   - make docker_push
+  - make heroku_deploy

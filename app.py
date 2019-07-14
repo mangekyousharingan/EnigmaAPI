@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask
 from flask_restful import Api
 from resources.Encode import Encode
@@ -18,4 +20,4 @@ api.add_resource(Encode, '/v1/encode')
 api.add_resource(Decode, '/v1/decode')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=int(os.getenv('PORT', 5000)))
