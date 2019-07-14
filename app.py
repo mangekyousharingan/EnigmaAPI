@@ -18,4 +18,4 @@ api.add_resource(Encode, '/v1/encode')
 api.add_resource(Decode, '/v1/decode')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host="0.0.0.0", port=5000)

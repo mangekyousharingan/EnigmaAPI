@@ -1,6 +1,11 @@
+language: python
+services:
+  - docker
+python:
+  - "3.6.4"
 install:
 - pip install -r requirements.txt
-# command to run tests
 script:
-# unit test
-- python -m pytest -v
+  - make test
+  - make docker_build
+  - make docker_push
