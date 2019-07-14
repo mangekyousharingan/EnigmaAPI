@@ -22,9 +22,11 @@ class Encoder:
         if word.__len__() > 4:
             chars = list(word[1:-1])
             random.shuffle(chars)
-            return f'{word[0]}{"".join(chars)}{word[-1]}'  # randomly shuffle  mid letters instead of first and last one
+            return f'{word[0]}{"".join(chars)}{word[-1]}'
+            # randomly shuffle  mid letters instead of first and last one
         else:
-            return f'{word[0]}{word[2:0:-1]}{word[3]}'  # for word where len == 4 we only shuffle two mid letters
+            return f'{word[0]}{word[2:0:-1]}{word[3]}'
+            # for word where len == 4 we only shuffle two mid letters
 
     @staticmethod
     def _replace_words_by_encoded_words_in_text(text: str, text_words: List[str],

@@ -43,8 +43,8 @@ class Decoder:
 
     @staticmethod
     def _get_corresponding_encoded_word(word: str, encoded_words_list: List[str]) -> str:
-        # Filter encoded words list to find corresponding word which has the same length and the same first and last letters
-        # TODO add check of letters in words
+        # Filter encoded words list to find corresponding words
+        # which has the same length and the same first and last letters
         def has_same_length(encoded_word, word):
             return True if encoded_word.__len__() == word.__len__() else False
 
