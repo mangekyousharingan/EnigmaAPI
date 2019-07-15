@@ -11,6 +11,7 @@ Technology stack:
 
 
 ##Basic URL:
+
 https://invulnerable-baguette-19588.herokuapp.com
 
 ## API Specification:
@@ -18,3 +19,9 @@ https://invulnerable-baguette-19588.herokuapp.com
  
  
 ##Deploy:
+
+To deploy application:
+1. Clone project repository to your local machine
+2. In your terminal go within project directory.
+3. Run the following command: **_make docker_push_**. It will create docker image and push it to the docker hub.
+4. Once the previous step is done run: make _**heroku_deploy**_ which will deploy docker to live servers on Heroku.
