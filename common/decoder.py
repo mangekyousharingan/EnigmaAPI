@@ -62,7 +62,8 @@ class Decoder:
     @staticmethod
     def _get_corresponding_encoded_word(word: str, encoded_words_list: List[str]) -> str:
         """Filter encoded words list to find corresponding words
-        which has the same length and the same first and last letters"""
+        which has the same length, the same first and last letters
+        and all the letters match between the words"""
 
         def has_same_length(encoded_word, word) -> bool:
             return encoded_word.__len__() == word.__len__()
@@ -70,10 +71,15 @@ class Decoder:
         def first_and_last_letters_match(encoded_word, word) -> bool:
             return encoded_word[0] == word[0] and encoded_word[-1] == word[-1]
 
-        return list(filter(lambda encoded_word: has_same_length(encoded_word, word) and first_and_last_letters_match(encoded_word, word),
-                           encoded_words_list))[0]
+        def all_letters_are_common(encoded_word, word):
+            return all(letter in encoded_word for letter in word)
+
+        return list(filter(lambda encoded_word: (has_same_length(encoded_word, word)
+                                                 and first_and_last_letters_match(encoded_word, word)
+                                                 and all_letters_are_common(encoded_word, word)
+                                                 ), encoded_words_list))[0]
 
     @staticmethod
     def _unpack_original_text(text: str) -> str:
-        """Extracting original version of text"""
+        """Extracting original version of text. Updated text between separators."""
         return text.rpartition(f"{Decoder.separator}")[0].replace(f"{Decoder.separator}", '')

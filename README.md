@@ -10,7 +10,7 @@ Technology stack:
 - [Heroku](https://www.heroku.com/)
 
 
-##Basic URL:
+## Base URL:
 
 https://invulnerable-baguette-19588.herokuapp.com
 
@@ -18,10 +18,11 @@ https://invulnerable-baguette-19588.herokuapp.com
 [Swagger](https://app.swaggerhub.com/apis/swdowiarz/EnigmaAPI/1.0.0)
  
  
-##Deploy:
+## Deploy:
 
 To deploy application:
 1. Clone project repository to your local machine
-2. In your terminal go within project directory.
-3. Run the following command: **_make docker_push_**. It will create docker image and push it to the docker hub.
-4. Once the previous step is done run: make _**heroku_deploy**_ which will deploy docker to live servers on Heroku.
+2. Make sure you have Docker and Heroku CLI pre installed.
+3. In your terminal go within project directory.
+4. Run the following command: **_make docker_push_**. It will create docker image and push it to the docker hub.
+5. Once the previous step is done run: make _**heroku_deploy**_ which will deploy docker to live servers on Heroku.
