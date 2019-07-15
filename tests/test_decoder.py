@@ -14,3 +14,8 @@ class TestDecoder(unittest.TestCase):
     def test_Decoder_when_empty_text_given(self):
         text = f'{self.separator}{self.separator}'
         self.assertEqual("", Decoder.decode_text(text))
+
+    def test_Decoder_if_text_decoded_properly(self):
+        encoded_text = "\n—weird—\nSmoe emxplae txet\n—weird—\nexample Some text"
+        decoded_text = Decoder.decode_text(encoded_text)
+        self.assertEqual("Some example text", decoded_text)

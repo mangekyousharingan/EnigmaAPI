@@ -11,6 +11,9 @@ TAG=$(USERNAME)/$(MY_DOCKER_NAME)
 test:
 	python -m pytest -v
 
+lint:
+	flake8 --ignore=E501,E999 common test
+
 docker_build:
 	docker build -t $(MY_DOCKER_NAME) .
 

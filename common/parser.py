@@ -1,6 +1,6 @@
+"""Module Parser responsible for parsing data from request"""
 from functools import wraps
 from typing import Dict
-
 from flask_restful import reqparse
 
 
@@ -31,5 +31,3 @@ class Parser:
 
             return func(*args, **kwargs)
         return decorator
-
-
