@@ -1,0 +1,21 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.idea
+__pycache__
+
+# Git
+.git
+.gitignore
+README.md
+
+# CI
+.travis.yml
+Makefile
+
+# Virtual env
+venv/
+
+# Folders
+tests
