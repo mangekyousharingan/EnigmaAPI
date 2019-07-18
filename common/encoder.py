@@ -7,18 +7,16 @@ from typing import List
 
 
 class Encoder:
-    separator = '\n—weird—\n'
+    separator: str = '\n—weird—\n'
     words_tokenizer = re.compile(r'(\w+)', re.U)
 
     @classmethod
     def encode_text(cls, text: str) -> str:
-        text_words: List[str] = list(
-            filter(lambda word: len(word) >= 4, cls.words_tokenizer.findall(text))
-        )
-        encoded_text_words: List[str] = [cls._encode_word(word) for word in text_words]
-        sorted_text_words: List[str] = sorted(
-            list(filter(lambda x: x not in encoded_text_words, text_words)),
-            key=lambda s: s.casefold()
+        text_words = [word for word in cls.words_tokenizer.findall(text) if len(word) >= 4]
+        encoded_text_words = [cls._encode_word(word) for word in text_words]
+        sorted_text_words = sorted(
+            [word for word in text_words if word not in encoded_text_words],
+            key=lambda word: word.casefold()
         )
         encoded_text = cls._replace_words_by_encoded_words_in_text(text, text_words,
                                                                    encoded_text_words)
@@ -28,11 +26,11 @@ class Encoder:
     @staticmethod
     def _encode_word(word: str) -> str:
         """Encode word by shuffling it's middle letters"""
-        if word.__len__() > 4:
+        if len(word) > 4:
             chars = list(word[1:-1])
             random.shuffle(chars)
             return f'{word[0]}{"".join(chars)}{word[-1]}'
-            # randomly shuffle  mid letters instead of first and last one
+            # randomly shuffle mid letters instead of first and last one
         else:
             return f'{word[0]}{word[2:0:-1]}{word[3]}'
             # for word where len == 4 we only shuffle two mid letters

@@ -1,7 +1,6 @@
 """
 This module contains Decoder class with all methods to decode text to it's original value.
 """
-
 import re
 from typing import List
 from common.exceptions import WrongTextFormatException
@@ -10,12 +9,13 @@ from common.exceptions import WrongTextFormatException
 class Decoder:
     separator_text: str = "weird"
     separator: str = f"\n—{separator_text}—\n"
+    words_tokenizer = re.compile(r'(\w+)', re.U)
 
     @classmethod
-    def decode_text(cls, encoded_text: str, tokenizer=re.compile(r'(\w+)', re.U)) -> str:
-        text_words: List[str] = tokenizer.findall(cls._validate_text_format(encoded_text))
-        encoded_words: List[str] = cls._get_encoded_words(text_words)
-        original_words: List[str] = cls._get_original_words(text_words, encoded_words)
+    def decode_text(cls, encoded_text: str) -> str:
+        text_words = cls.words_tokenizer.findall(cls._validate_text_format(encoded_text))
+        encoded_words = cls._get_encoded_words(text_words)
+        original_words = cls._get_original_words(text_words, encoded_words)
         decoded_text = cls._replace_encoded_words_with_original(
             encoded_text, encoded_words, original_words
         )
@@ -44,11 +44,8 @@ class Decoder:
 
     @staticmethod
     def _get_original_words(text_words: List[str], encoded_words: List[str]) -> List[str]:
-        """Return list of words that has been encoded"""
-        return list(filter(
-            lambda word: word != Decoder.separator_text and word not in encoded_words,
-            text_words
-        ))
+        """Return list of words that has been encoded. Words after second separator."""
+        return [word for word in text_words if word != Decoder.separator_text and word not in encoded_words]
 
     @staticmethod
     def _replace_encoded_words_with_original(encoded_text, encoded_words, original_words):
@@ -66,7 +63,7 @@ class Decoder:
         and all the letters match between the words"""
 
         def has_same_length(encoded_word, word) -> bool:
-            return encoded_word.__len__() == word.__len__()
+            return len(encoded_word) == len(word)
 
         def first_and_last_letters_match(encoded_word, word) -> bool:
             return encoded_word[0] == word[0] and encoded_word[-1] == word[-1]
@@ -74,10 +71,8 @@ class Decoder:
         def all_letters_are_common(encoded_word, word):
             return all(letter in encoded_word for letter in word)
 
-        return list(filter(lambda encoded_word: (has_same_length(encoded_word, word)
-                                                 and first_and_last_letters_match(encoded_word, word)
-                                                 and all_letters_are_common(encoded_word, word)
-                                                 ), encoded_words_list))[0]
+        return [encoded_word for encoded_word in encoded_words_list if has_same_length(encoded_word, word)
+                and first_and_last_letters_match(encoded_word, word) and all_letters_are_common(encoded_word, word)][0]
 
     @staticmethod
     def _unpack_original_text(text: str) -> str:
