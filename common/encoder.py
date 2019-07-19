@@ -26,11 +26,16 @@ class Encoder:
     @staticmethod
     def _encode_word(word: str) -> str:
         """Encode word by shuffling it's middle letters"""
+        def shuffle_mid_letters(word: str) -> str:
+            word_mid_letters = list(word[1:-1])
+            while word_mid_letters == list(word[1:-1]):
+                random.shuffle(word_mid_letters)
+            return "".join(word_mid_letters)
+
         if len(word) > 4:
-            chars = list(word[1:-1])
-            random.shuffle(chars)
-            return f'{word[0]}{"".join(chars)}{word[-1]}'
-            # randomly shuffle mid letters instead of first and last one
+            shuffled_letters = shuffle_mid_letters(word)
+            return f'{word[0]}{shuffled_letters}{word[-1]}'
+            # randomly shuffle mid letters except of the first and last one
         else:
             return f'{word[0]}{word[2:0:-1]}{word[3]}'
             # for word where len == 4 we only shuffle two mid letters

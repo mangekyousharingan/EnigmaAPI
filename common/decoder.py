@@ -51,8 +51,7 @@ class Decoder:
     def _replace_encoded_words_with_original(encoded_text, encoded_words, original_words):
         text_with_originals = encoded_text
         for word in original_words:
-            corresponding_encoded_word: str = Decoder._get_corresponding_encoded_word(word,
-                                                                                      encoded_words)
+            corresponding_encoded_word = Decoder._get_corresponding_encoded_word(word, encoded_words)
             text_with_originals = text_with_originals.replace(corresponding_encoded_word, word)
         return text_with_originals
 
@@ -62,17 +61,15 @@ class Decoder:
         which has the same length, the same first and last letters
         and all the letters match between the words"""
 
-        def has_same_length(encoded_word, word) -> bool:
-            return len(encoded_word) == len(word)
-
         def first_and_last_letters_match(encoded_word, word) -> bool:
             return encoded_word[0] == word[0] and encoded_word[-1] == word[-1]
 
-        def all_letters_are_common(encoded_word, word):
-            return all(letter in encoded_word for letter in word)
+        def mid_letters_are_common(encoded_word, word):
+            return sorted(encoded_word[1: -1]) == sorted(word[1: -1])
 
-        return [encoded_word for encoded_word in encoded_words_list if has_same_length(encoded_word, word)
-                and first_and_last_letters_match(encoded_word, word) and all_letters_are_common(encoded_word, word)][0]
+        return [encoded_word for encoded_word in encoded_words_list
+                if first_and_last_letters_match(encoded_word, word)
+                and mid_letters_are_common(encoded_word, word)][0]
 
     @staticmethod
     def _unpack_original_text(text: str) -> str:
